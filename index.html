@@ -231,6 +231,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#FFF8F7;colo
       <span class="chip" data-g="walk" data-v="5" onclick="setChip(this,'walk')">5분↓</span>
       <span class="chip" data-g="walk" data-v="10" onclick="setChip(this,'walk')">10분↓</span>
       <span class="chip" data-g="walk" data-v="15" onclick="setChip(this,'walk')">15분↓</span>
+      <span class="chip" data-g="walk" data-v="99" onclick="setChip(this,'walk')">15분+</span>
     </div></div>
     <div class="frow"><span class="flabel">옵션</span><div class="chips" style="gap:10px">
       <div class="togw" onclick="toggleF('room')"><div class="tog" id="tog-room"><div class="togk"></div></div><span class="toglabel">룸</span></div>
@@ -291,7 +292,6 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#FFF8F7;colo
   </div>
 </div>
 
-<script>
 <script>
 var SCRIPT_URL="https://script.google.com/macros/s/AKfycbzQZemMsNrOklwioKN89JctpD4m_h-J9m7mceVe0Z6q5Lzt4Wv3aQjUJ4M9Ct8CAfzCCA/exec";
 var BUDGET_ORDER=["1만원대","2만원대","3만원대","4만원대"];
@@ -378,8 +378,12 @@ function applyFilters(){
   }
   var walks=multiFilters.walk;
   if(!walks.includes("0")){
-    var maxW=Math.max.apply(null,walks.map(Number));
-    list=list.filter(function(p){return Number(p["도보(분)"]||99)<=maxW;});
+    if(walks.includes("99")){
+      list=list.filter(function(p){return Number(p["도보(분)"]||0)>15;});
+    } else {
+      var maxW=Math.max.apply(null,walks.filter(function(v){return v!=="99";}).map(Number));
+      list=list.filter(function(p){return Number(p["도보(분)"]||99)<=maxW;});
+    }
   }
   if(filters.room)list=list.filter(function(p){return p["룸보유"]==="Y";});
   if(filters.delivery)list=list.filter(function(p){return p["배달가능"]==="Y";});
