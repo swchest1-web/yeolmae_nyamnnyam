@@ -166,7 +166,7 @@ body{font-family:-apple-system,"Noto Sans KR",sans-serif;background:#FFF8F7;colo
   .panel-body{padding:14px 14px 90px}
   /* 마스코트 */
   .mascot-float{bottom:70px;right:10px}
-  .mascot-float img{width:70px;height:70px}
+  .mascot-float img{width:60px;height:60px}
   .mbubble{font-size:10px;padding:3px 9px}
   /* 배너 */
   .banner-bar{height:54px}
@@ -532,10 +532,11 @@ function selectCardByName(name){
 }
 
 
-(function(){
+window.addEventListener("DOMContentLoaded", function(){
   var track=document.getElementById("banner-track");
   if(!track)return;
   var dotsEl=document.getElementById("banner-dots");
+  if(!dotsEl)return;
   var slides=track.querySelectorAll(".banner-slide");
   var total=slides.length,cur=0,timer;
   for(var i=0;i<total;i++){
@@ -548,7 +549,7 @@ function selectCardByName(name){
   startTimer();
   track.addEventListener("mouseenter",function(){clearInterval(timer);});
   track.addEventListener("mouseleave",startTimer);
-})();
+});
 
 // ── 오늘의 추천 (마스코트 클릭) ──────────────────────────────
 function openTodayRec(){
